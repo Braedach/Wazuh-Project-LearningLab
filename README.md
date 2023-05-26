@@ -147,18 +147,19 @@ The following important file locations should be noted - you will need to learn 
 | /etc/wazuh-dashboard                               | Wazuh Dashboard files                                                         |
 | /etc/wazuh-indexer                                 | Wazuh Index files - Filebeat installed with these                             |
 | /usr/share/filebeat/module/wazuh/alerts/ingest     | pipeline.json file located here - responsible for geotagging                  |
-| /var/ossec/etc/lists/                              | 
+| /var/ossec/etc/lists/                              | List files - used in conjunction with Rules - important                       |
+| /var/ossec/etc/shared                              | Used within groups                                                            |
+|                                                    | Placing files within the correct groups allows for dissemination to endpoints |
+|                                                    | Files of anytype supported by Wazuh can be placed in these directories        |
+| /var/ossec/etc/decoders                            | Decoders used by Wazuh to read various ingested logs correctly                |
+|                                                    | It is recommended to get these confirmed by third parties                     |
+| /var/ossec/etc/rules                               | Custom rules - SOCFortress rules go in here for a start                       |
+|                                                    | You can normally edit these rules via webui                                   |
+| /var/ossec/ruleset/rules                           | Wazuh rules - rights can be modified to allow editing via webui               |
+| /var/ossec/active-response/bin                     | Where files go that are marked as active- response within config files        |
+| /var/log                                           | Location of log files that can be imported via decoders                       |
 
-		
-		- /var/ossec/etc/lists/
-		- /var/ossec/etc/shared
-		- /var/ossec/etc/lists
-		- /var/ossec/etc/decoders
-		- /var/ossec/ruleset/decoders
-		- /var/ossec/etc/rules
-		- /var/ossec/ruleset/rules
-		- /var/ossec/active-response/bin
-		- /var/log/
+
 
 		
 		
