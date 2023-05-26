@@ -125,10 +125,10 @@ I have briefly meantioned SOCFortress annd I need to explain
   - Reference: https://www.linkedin.com/company/socfortressmdr/
 
 So lets begin
-	- Using the terminal SSH on your daily driver connect back to your Wazuh server
-	- Ensure you are in your local home directory (for convenience) and you will need GIT
-		- apt install git
-		- curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh && bash ~/wazuh_socfortress_rules.sh
+  - Using the terminal SSH on your daily driver connect back to your Wazuh server
+  - Ensure you are in your local home directory (for convenience) and you will need GIT
+  	- apt install git
+	- curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh && bash ~/wazuh_socfortress_rules.sh
 	- Assuming no errors - your Wazuh Manager should restart and all is good
 	- Since we have already installed auditd and sysmon for Linux upon restart you should see these alerts arriving in your webui although you may need to filter for these via the AgentID=000 as this should be your Wazuh Server
 
