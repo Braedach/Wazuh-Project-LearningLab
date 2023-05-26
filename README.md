@@ -133,23 +133,23 @@ So lets begin
 	- Since we have already installed auditd and sysmon for Linux upon restart you should see these alerts arriving in your webui although you may need to filter for these via the AgentID=000 as this should be your Wazuh Server
 
 Problems
-	- Wazuh lists - Wazuh list are not included in this script
-	- The rules and decoders are however - I strongly suggest you read the script that you have run assuming you are following along
-	- You will need to recreate this lists that are located here
-		- /var/ossec/etc/lists
-	- The following lists are of immedidate concern
-		- common-ports
-		- malicious-powershell
-		- You will see errors after importing SOCFortress rules into your system via the Wazuh webui under management/logs
-	- Wazuh is a complex little beast and as it receives updates via apt it will overwrite files as such you will need to learn about custom configurations a few places of note are here.
-	
-	| System location			| Importance							|
-	|---------------------------------------|---------------------------------------------------------------|
-	| 
+   - Lists - the SOCFortress script does not allow for scripts to be imported
+   - There are three of note
+        - common-ports, malicious-powershell and another to do with bash
+        - Fill this out to name the file
 
-		- /etc/wazuh-dashboard
-		- /etc/wazuh-indexer
-		- /usr/share/filebeat/module/wazuh/alerts/ingest
+Important file locations
+
+The following important file locations should be noted - you will need to learn these and the ramificaitons of creating files within these locations mainly in relation to the correct ownership and rights
+
+| System location                                    | Importance						                     |
+|----------------------------------------------------|-------------------------------------------------------------------------------|
+| /etc/wazuh-dashboard                               | Wazuh Dashboard files                                                         |
+| /etc/wazuh-indexer                                 | Wazuh Index files - Filebeat installed with these                             |
+| /usr/share/filebeat/module/wazuh/alerts/ingest     | pipeline.json file located here - responsible for geotagging                  |
+| /var/ossec/etc/lists/                              | 
+
+		
 		- /var/ossec/etc/lists/
 		- /var/ossec/etc/shared
 		- /var/ossec/etc/lists
