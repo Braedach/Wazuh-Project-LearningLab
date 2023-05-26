@@ -159,6 +159,29 @@ The following important file locations should be noted - you will need to learn 
 | /var/ossec/active-response/bin                     | Where files go that are marked as active- response within config files        |
 | /var/log                                           | Location of log files that can be imported via decoders                       |
 
+Base installation of Wazuh is finished.
+
+
+## Post Installation
+
+If you read the Wazuh blog posts there are lots of interesting work
+    - Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
+    - They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
+         - I will fill this out later
+         - The wife is waiting for me
+         
+## Post installation notes
+
+I need to get on with helping Taylor and that requires some time and testing.  I have found the following issues
+    - Reference: https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
+        - Not tested
+    - Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
+        - Not working properly - Fix it
+    - Reference: https://github.com/MarkBaggett/domain_stats
+    - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
+        - Works as a service but something is not right
+        
+Note - a lot of fine tuning is needed
 
 
 		
