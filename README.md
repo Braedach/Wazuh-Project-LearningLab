@@ -124,6 +124,38 @@ I have briefly meantioned SOCFortress annd I need to explain
   - Reference: https://www.linkedin.com/in/taylor-walton-b772a6b2/
   - Reference: https://www.linkedin.com/company/socfortressmdr/
 
+So lets begin
+	- Using the terminal SSH on your daily driver connect back to your Wazuh server
+	- Ensure you are in your local home directory (for convenience) and you will need GIT
+		- apt install git
+		- curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh && bash ~/wazuh_socfortress_rules.sh
+	- Assuming no errors - your Wazuh Manager should restart and all is good
+	- Since we have already installed auditd and sysmon for Linux upon restart you should see these alerts arriving in your webui although you may need to filter for these via the AgentID=000 as this should be your Wazuh Server
 
+Problems
+	- Wazuh lists - Wazuh list are not included in this script
+	- The rules and decoders are however - I strongly suggest you read the script that you have run assuming you are following along
+	- You will need to recreate this lists that are located here
+		- /var/ossec/etc/lists
+	- The following lists are of immedidate concern
+			- common-ports
+			- malicious-powershell
+	- You will see errors after importing SOCFortress rules into your system via the Wazuh webui under management/logs
+	- Wazuh is a complex little beast and as it receives updates via apt it will overwrite files as such you will need to learn about custom configurations a few places of note are here.
+		- /etc/wazuh-dashboard
+		- /etc/wazuh-indexer
+		- /usr/share/filebeat/module/wazuh/alerts/ingest
+		- /var/ossec/etc/lists/
+		- /var/ossec/etc/shared
+		- /var/ossec/etc/lists
+		- /var/ossec/etc/decoders
+		- /var/ossec/ruleset/decoders
+		- /var/ossec/etc/rules
+		- /var/ossec/ruleset/rules
+		- /var/ossec/active-response/bin
+		- /var/log/
+
+		
+		
 
 
