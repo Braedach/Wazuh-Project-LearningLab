@@ -138,10 +138,15 @@ Problems
 	- You will need to recreate this lists that are located here
 		- /var/ossec/etc/lists
 	- The following lists are of immedidate concern
-                - common-ports
-                - malicious-powershell
-	- You will see errors after importing SOCFortress rules into your system via the Wazuh webui under management/logs
+		- common-ports
+		- malicious-powershell
+		- You will see errors after importing SOCFortress rules into your system via the Wazuh webui under management/logs
 	- Wazuh is a complex little beast and as it receives updates via apt it will overwrite files as such you will need to learn about custom configurations a few places of note are here.
+	
+	| System location			| Importance							|
+	|---------------------------------------|---------------------------------------------------------------|
+	| 
+
 		- /etc/wazuh-dashboard
 		- /etc/wazuh-indexer
 		- /usr/share/filebeat/module/wazuh/alerts/ingest
