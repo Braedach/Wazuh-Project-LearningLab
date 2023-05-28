@@ -222,8 +222,12 @@ Enable these via the following
 ```
 
 Append the following commands to the first file - alter the commands in the second file.  Note the second file will overwrite on updates from apt
-wazuh_command.remote_commands=1
-sca.remote_commands=1
+
+```shell
+	wazuh_command.remote_commands=1
+	sca.remote_commands=1
+```
+
 
 #### Geotagging Normalisation - via ingest pipeline
 
