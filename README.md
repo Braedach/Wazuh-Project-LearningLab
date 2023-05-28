@@ -228,6 +228,8 @@ Append the following commands to the first file - alter the commands in the seco
 	sca.remote_commands=1
 ```
 
+Check you local agent logs to ensure that any scripts you have created are executing.
+This is probably a little premature at this stage as we havent created any but the defaults.
 
 #### Geotagging Normalisation - via ingest pipeline
 
@@ -242,8 +244,7 @@ Reference: https://github.com/wazuh/wazuh/blob/e4fcce131086ecce93623379b3eb7cfa2
 	cp pipeline.json pipeline.bak
 	nano pipeline.json - alter the file very carefully.  I suggest you strongly use a backup file kept in your local files.
 	/etc/filebeat#
-	cp filebeat.yml filebeat.bak
-    	nano filebeat.yml - alter the file to contain the following lines  - filebeat.overwrite_pipelines: true setup.template.overwrite: true
+   	nano filebeat.yml - alter the file to contain the following lines  - filebeat.overwrite_pipelines: true setup.template.overwrite: true
 	systemctl restart filebeat
 	systemctl status filebeat
 ```
@@ -253,8 +254,77 @@ Ensure you are getting the updated data in your events in the wazuh webui
 
 #### Wazuh VMWare Integration 
 
-Fill this in
-- Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
+I have a VMWare Exsi server so I will be integrating its logs into Wazuh
+Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
+Since I have not touched the VMWare server I will be skipping this bit in the reference and only doing the Wazuh side of the configuration.
+
+```shell
+	cd /etc/
+	nano rsyslog.conf
+```
+
+Edit the file as follows
+```shell
+# provides UDP syslog reception
+module(load="imudp")
+input(type="imudp" port="514")
+if $fromhost-ip startswith '192.168.1.12' then /var/log/vmware-esxi.log
+```
+
+Do not add the extra bit in the reference.  It creates an error 
+Run the following commands
+
+```shell
+	touch /var/log/vmware-esxi.log
+	chown syslog:adm /var/log/vmware-esxi.log
+	systemctl restart rsyslog
+	systemctl status rsyslog - check to ensure we have not broke the service.
+	tail /var/log/vmware-esxi.log - yep we are getting a feed from the vmware host
+	
+```
+
+Create the decoder for the log file
+Please use the contents of the decoder block from the reference.
+
+```shell
+	nano /var/ossec/etc/decoders/esxi_decoders.xml
+	systemctl restart wazuh-manager
+	systemctl status wazuh-manager	
+```
+
+Create the rules 
+Please use the contents of the reference
+I have changed the name of this rules block to come into line with SOCFortress conventions
+
+```shell
+	nano /var/ossec/etc/rules/111000-esxi-rules.xml
+	chown wazuh:wazuh 111000-esxi-rules.xml
+	chmod 660 111000-esxi-rules.xml
+```
+
+
+Add the following contents inside the <ossec_config> blocks of the Wazuh agent configuration /var/ossec/etc/ossec.conf file
+Note if you use any special agent.conf file for linux you can add the code block there.
+
+```xml
+	<localfile>
+  	<log_format>syslog</log_format>
+ 	<location>/var/log/vmware-esxi.log</location>
+  	<out_format>vmware-esxi: $(log)</out_format>
+	</localfile>
+	
+```
+
+Restart the Wazuh manager and check its status
+There is no need to add the decoder or the rule block to the ossec.conf file as we have put these in the right place and have set the appropriate permissions
+THE LOG IS NOT SHOWING IN WAZUH - FIX IT.
+
+#### Script Dissemination to Endpoints. 
+
+Script dissemination can occur via the agent so third party applications are not required.
+The following is a brief process on how this can be achieved.
+
+
 
 #### Domain stats 
 
