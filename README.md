@@ -47,10 +47,13 @@ Test the connection and log in via your daily driver to your ready to install Ub
         apt install auditd
         cd /etc/audit/rules.d
         nano audit.rules
+	
  - cut and paste the contents of the reference after removing the current contents (yep very handy is cut and paste)
+
      ```shell
         systemctl restart auditd
         auditctl -l 
+	
 - The above command should give you a swag load of rules
 - Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
     - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Sysmon%20Linux
@@ -63,7 +66,7 @@ Test the connection and log in via your daily driver to your ready to install Ub
         sysmon -i
         systemctl status sysmon
         
- You have now boosted your security and its logging away in the background
+ You have now boosted your security logging.
 
 
 
@@ -188,31 +191,31 @@ These can be found using the wazuh manager logs.
 They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
 I will fill this out later
 
-### Remote execution of Wazuh Commands and SCA Commands
+#### Remote execution of Wazuh Commands and SCA Commands
 
 Fill this in
 
 
-### Geotagging Normalisation - via ingest pipeline
+#### Geotagging Normalisation - via ingest pipeline
 
 Fill this in
 
-### Wazuh VMWare Integration 
+#### Wazuh VMWare Integration 
 
 Fill this in
 - Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
 
-### Domain stats 
+#### Domain stats 
 
 Fill this in
 - Reference: https://github.com/MarkBaggett/domain_stats
 - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
 
-### SOC Fortress API intergration
+#### SOC Fortress API intergration
 
 Fill this in
 
-### Miscellaneous 
+#### Miscellaneous 
 
 Fill this in
   - Rule alternation and fine tuning
