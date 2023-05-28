@@ -165,20 +165,42 @@ Base installation of Wazuh is finished.
 ## Post Installation
 
 If you read the Wazuh blog posts there are lots of interesting work
-    - Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
-    - These can be found using the wazuh manager logs.
-    - They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
-         - I will fill this out later
+Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
+These can be found using the wazuh manager logs.
+They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
+I will fill this out later
+
+## Geotagging Normalisation - via ingest pipeline
+
+Fill this in
+
+### Wazuh VMWare Integration 
+
+Fill this in
+- Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
+
+### Domain stats 
+
+Fill this in
+- Reference: https://github.com/MarkBaggett/domain_stats
+- Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
+
+### SOC Fortress API intergration
+
+Fill this in
+
+### Miscellaneous 
+
+Fill this in
+  - Rule alternation and fine tuning
+  - SOCFortress respository fork and pull request modification
+  - 
          
 ## Post installation notes
 
 I need to get on with helping Taylor and that requires some time and testing.  I have found the following issues
-    - Reference: https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
+  - Reference: https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
         - Not tested
-    - Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
-        - Not working properly - Fix it
-    - Reference: https://github.com/MarkBaggett/domain_stats
-    - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
-        - Works as a service but something is not right
+
         
 Note - a lot of fine tuning is needed
