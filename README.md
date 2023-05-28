@@ -20,7 +20,7 @@ SERVER Base
 3. The minimal installation was chosen on installation to remove bloat
 
 ## Installation
--------------------------------------------------------------------------------------------------------------------------------------------
+
 Base operating system prep work
 
 1. Set a hostname that makes sense to you
@@ -206,10 +206,9 @@ Base installation of Wazuh is finished.
 ## Post Installation
 
 If you read the Wazuh blog posts there are lots of interesting work
-Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
-These can be found using the wazuh manager logs.
-They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
-I will fill this out later
+1. Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
+2. Errors can be found using the wazuh manager logs.
+
 
 #### Remote execution of Wazuh Commands and SCA Commands
 
@@ -224,7 +223,7 @@ Enable these via the following
 	systemctl restart wazuh-manager
 ```
 
-Append the following commands to the first file - alter the commands in the second file.  Note the second file will overwrite on updates from apt
+Append the following commands to the first file - alter the commands in the second file.  Note the second file will overwrite on updates from apt - which is why it is required.
 
 ```shell
 	wazuh_command.remote_commands=1
@@ -234,6 +233,7 @@ Append the following commands to the first file - alter the commands in the seco
 Check you local agent logs to ensure that any scripts you have created are executing.
 This is probably a little premature at this stage as we havent created any but the defaults.
 
+
 #### Geotagging Normalisation - via ingest pipeline
 
 By default certain fields will generate a geotag for country, city, coordinates and so on.  After you start altering wazuh from default you may find fields you wish to add this data for.
@@ -241,6 +241,9 @@ For example sysmon Event 3 log events both in Windows and Linux.
 To to this you will need to alter a file called pipeline.json.  There are other methods and this might require some research.
 I am going to use the wazuh method for the time being.
 Reference: https://github.com/wazuh/wazuh/blob/e4fcce131086ecce93623379b3eb7cfa2166b480/extensions/filebeat/7.x/wazuh-module/alerts/ingest/pipeline.json
+Reference: https://www.youtube.com/watch?v=Q_V3SgZWcr4&t=100s
+
+1.  Alter the pipeline.json file
 
 ```shell
 	cd /usr/share/filebeat/module/wazuh/alerts/ingest
@@ -252,21 +255,25 @@ Reference: https://github.com/wazuh/wazuh/blob/e4fcce131086ecce93623379b3eb7cfa2
 	systemctl status filebeat
 ```
 
-Access the webui and confirm all is still working.  If it breaks, restore your back up files and try again.  Its probably your formatting in the pipeline.json file
-Ensure you are getting the updated data in your events in the wazuh webui
+2. Access the webui and confirm all is still working.  If it breaks, restore your back up files and try again.  Its probably your formatting in the pipeline.json file
+3. Ensure you are getting the updated data in your events in the wazuh webui
+4. You will probably be doing this a far bit as you ingest more data beyond the wazuh default.
+
 
 #### Wazuh VMWare Integration 
 
 I have a VMWare Exsi server so I will be integrating its logs into Wazuh
 Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
-Since I have not touched the VMWare server I will be skipping this bit in the reference and only doing the Wazuh side of the configuration.
+
+1. Since I have not touched the VMWare server I will be skipping this bit in the reference and only doing the Wazuh side of the configuration.
 
 ```shell
 	cd /etc/
 	nano rsyslog.conf
 ```
 
-Edit the file as follows
+2. Edit the file as follows
+
 ```shell
 # provides UDP syslog reception
 module(load="imudp")
@@ -274,8 +281,8 @@ input(type="imudp" port="514")
 if $fromhost-ip startswith '192.168.1.12' then /var/log/vmware-esxi.log
 ```
 
-Do not add the extra bit in the reference.  It creates an error 
-Run the following commands
+3. Do not add the extra bit in the reference.  It creates an error 
+4. Run the following commands
 
 ```shell
 	touch /var/log/vmware-esxi.log
@@ -286,8 +293,8 @@ Run the following commands
 	
 ```
 
-Create the decoder for the log file
-Please use the contents of the decoder block from the reference.
+5. Create the decoder for the log file
+6. Please use the contents of the decoder block from the reference.
 
 ```shell
 	nano /var/ossec/etc/decoders/esxi_decoders.xml
@@ -295,9 +302,9 @@ Please use the contents of the decoder block from the reference.
 	systemctl status wazuh-manager	
 ```
 
-Create the rules 
-Please use the contents of the reference
-I have changed the name of this rules block to come into line with SOCFortress conventions
+7. Create the rules 
+8. Please use the contents of the reference
+9. I have changed the name of this rules block to come into line with SOCFortress conventions
 
 ```shell
 	nano /var/ossec/etc/rules/111000-esxi-rules.xml
@@ -306,8 +313,8 @@ I have changed the name of this rules block to come into line with SOCFortress c
 ```
 
 
-Add the following contents inside the <ossec_config> blocks of the Wazuh agent configuration /var/ossec/etc/ossec.conf file
-Note if you use any special agent.conf file for linux you can add the code block there.
+10. Add the following contents inside the <ossec_config> blocks of the Wazuh agent configuration /var/ossec/etc/ossec.conf file
+- Note if you use any special agent.conf file for linux you can add the code block there.
 
 ```xml
 	<localfile>
@@ -318,16 +325,16 @@ Note if you use any special agent.conf file for linux you can add the code block
 	
 ```
 
-Restart the Wazuh manager and check its status
-There is no need to add the decoder or the rule block to the ossec.conf file as we have put these in the right place and have set the appropriate permissions
-THE LOG IS NOT SHOWING IN WAZUH - FIX IT.
+11. Restart the Wazuh manager and check its status
+	- There is no need to add the decoder or the rule block to the ossec.conf file as we have put these in the right place and have set the appropriate permissions
+	- THE LOG IS NOT SHOWING IN WAZUH - FIX IT.
 
 #### Script Dissemination to Endpoints. 
 
 Script dissemination can occur via the agent so third party applications are not required.
 The following is a brief process on how this can be achieved.
-
 SSH into your wazuh server as root.
+
 1. Navigate to the following
 ```shell
 	cd /var/ossec/etc/shared
@@ -349,34 +356,38 @@ SSH into your wazuh server as root.
 	- Add the command wodle to the agent.conf file in the right group
 	- The file will be located in Windows endpoints here - C:\Program Files (x86)\ossec-agent\shared
 
-#### Domain stats 
-
-Fill this in
-- Reference: https://github.com/MarkBaggett/domain_stats
-- Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
 
 #### SOC Fortress API intergration
 
-Fill this in
+SOC Fortress provide access via the API to a list of IOC's that are extremely useful.
+These can be intergrated into Wazuh either directly or via Graylog which the recommended solution
+Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
 
-#### Miscellaneous 
+1.  This has been installed on my Wazuh Server via the instuctions in the reference
+2.  I quickly exceeded my API calls using a Wazuh server install rather than Graylog
+3.  The API was called with sysmon level 3 events only but exceeded 3000 calls a day
+4.  The reference is self explanatory.
 
-Fill this in
-  - Rule alternation and fine tuning
-  - SOCFortress respository fork and pull request modification
-  - 
+
+#### Domain stats 
+
+Domain stats is a reputation based DNS query API that can be installed on a server and fed Sysmon DNS Events
+Appropriate references have been provided.
+Reference: https://github.com/MarkBaggett/domain_stats
+Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
+1.  I had this going via a service on my Wazuh server
+2.  I am experiencing issues and have yet to reimplement
+
+
          
-## Post installation notes
+## Outstanding Work
 
-I need to get on with helping Taylor and that requires some time and testing.  I have found the following issues
- - Reference: https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
- - Not tested
-
-Backup shell script
-Update SOCFortress rules script - more about where it gets the rules rather than the script
-Review of cron jobs
-Investigation of Firewalla API calls and mechanisms and integration into Wazuh
-Investigation of Windows Firewall rules scripts
+The following list of references is outstanding work not including the notes above
+1. https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
+2. Backup shell script
+3. Update SOCFortress rules script - more about where it gets the rules rather than the script
+4. Investigation of Firewalla API calls and mechanisms and integration into Wazuh
+5. Investigation of Windows Firewall rules scripts
 
 
         
