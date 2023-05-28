@@ -324,7 +324,27 @@ THE LOG IS NOT SHOWING IN WAZUH - FIX IT.
 Script dissemination can occur via the agent so third party applications are not required.
 The following is a brief process on how this can be achieved.
 
+SSH into your wazuh server as root.
+1. Navigate to the following
+```shell
+	cd /var/ossec/etc/shared
+```
 
+2. Find the groups you set up - I have 3 linux(default), windows and test
+3. Create your PowerShell script in the appropriate group
+```shell
+	nano /var/ossec/etc/shared/Windows/<name of your file>
+```
+5. Change the permissions and ownership
+
+```shell
+	chown wazuh:wazuh /var/ossec/etc/shared/Windows/<name of your file>
+	chmod 660 /var/ossec/etc/shared/Windows/<name of your file>
+```
+
+5. Using the wazuh interface
+	- Add the command wodle to the agent.conf file in the right group
+	- The file will be located in Windows endpoints here - C:\Program Files (x86)\ossec-agent\shared
 
 #### Domain stats 
 
