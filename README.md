@@ -9,53 +9,56 @@ I am not a professional employed in the field
 
 HARWARE
 
-An existing laptop has been utilised with 500Gb of storage, a generation 5 Intel i5 on 32Gb RAM
-This handles the home network of about 10 Windows systems and linux servers used within the home Lab
-It also has a battery - cheap mans UPS
+1. An existing laptop has been utilised with 500Gb of storage, a generation 5 Intel i5 on 32Gb RAM
+2. This handles the home network of about 10 Windows systems and linux servers used within the home Lab
+3. It also has a battery - cheap mans UPS
 
 SERVER Base
 
-The base OS is Ubuntu 22.04
-This has been chosen due to its extended support, ability to go Ubuntu Pro, and large software respository support
-The minimal installation was chosen on installation to remove bloat
+1. The base OS is Ubuntu 22.04
+2. This has been chosen due to its extended support, ability to go Ubuntu Pro, and large software respository support
+3. The minimal installation was chosen on installation to remove bloat
 
 ## Installation
-
+-------------------------------------------------------------------------------------------------------------------------------------------
 Base operating system prep work
 
-Set a hostname that makes sense to you
-Set a password for the ROOT user - you will need the access
-Update the system using terminal
-Turn of hybernation and set the screen blanking to something realistic
-Check network settings and ensure IPV6 is enabled - you want a static IP address - I manage this via the firewalla/router - it will get a static address.
-Install openSSH - nothing fancy - its behind a firewall and wont be getting public access
-Reset all the SSH keys
+1. Set a hostname that makes sense to you
+2. Set a password for the ROOT user - you will need the access
+3. Update the system using terminal
+4. Turn of hybernation and set the screen blanking to something realistic
+5. Check network settings and ensure IPV6 is enabled - you want a static IP address - I manage this via the firewalla/router - it will get a static address.
+6. Install openSSH - nothing fancy - its behind a firewall and wont be getting public access
+7. Reset all the SSH keys
   ```shell
        sudo /bin/rm -v /etc/ssh/ssh_host_*
        sudo dpkg-reconfigure openssh-server && sudo systemctl restart ssh
   ``` 
 
-Test the connection and log in via your daily driver to your ready to install Ubuntu OS
+8. Test the connection and log in via your daily driver to your ready to install Ubuntu OS
     - Using Windows terminal and log in to your ready to be setup server
     - Note if you are reading this this will allow for cut and paste which is extremly handy as we move along
-- Install auditd
+9. Install auditd
     - Reference: https://github.com/socfortress/Wazuh-Rules/blob/main/Auditd/auditd.conf
     - I will get to SOCFortress later - but lets just say I think he is a legend
     - Elevate to the ROOT user you setup earlier
-    ```shell
+
+```shell
         su
         apt install auditd
         cd /etc/audit/rules.d
         nano audit.rules
-	
- - cut and paste the contents of the reference after removing the current contents (yep very handy is cut and paste)
+ ```
+10. Cut and paste the contents of the reference after removing the current contents (yep very handy is cut and paste)
 
      ```shell
         systemctl restart auditd
         auditctl -l 
 	
 - The above command should give you a swag load of rules
-- Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
+
+
+11. Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
     - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Sysmon%20Linux
     - Reference: https://github.com/Sysinternals/SysmonForLinux
     - Reference: https://github.com/Sysinternals/SysmonForLinux/blob/main/INSTALL.md
