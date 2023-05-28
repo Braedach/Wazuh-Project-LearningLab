@@ -170,7 +170,12 @@ These can be found using the wazuh manager logs.
 They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
 I will fill this out later
 
-## Geotagging Normalisation - via ingest pipeline
+### Remote execution of Wazuh Commands and SCA Commands
+
+Fill this in
+
+
+### Geotagging Normalisation - via ingest pipeline
 
 Fill this in
 
@@ -199,8 +204,15 @@ Fill this in
 ## Post installation notes
 
 I need to get on with helping Taylor and that requires some time and testing.  I have found the following issues
-  - Reference: https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
-        - Not tested
+ - Reference: https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
+ - Not tested
+
+Backup shell script
+Update SOCFortress rules script - more about where it gets the rules rather than the script
+Review of cron jobs
+Investigation of Firewalla API calls and mechanisms and integration into Wazuh
+Investigation of Windows Firewall rules scripts
+
 
         
 Note - a lot of fine tuning is needed
