@@ -30,7 +30,7 @@ Base operating system prep work
   ```shell
        sudo /bin/rm -v /etc/ssh/ssh_host_*
        sudo dpkg-reconfigure openssh-server && sudo systemctl restart ssh
-  ```
+       
 - Test the connection and log in via your daily driver to your ready to install Ubuntu OS
     - Using Windows terminal and log in to your ready to be setup server
     - Note if you are reading this this will allow for cut and paste which is extremly handy as we move along
@@ -43,12 +43,10 @@ Base operating system prep work
         apt install auditd
         cd /etc/audit/rules.d
         nano audit.rules
-      ```  
  - cut and paste the contents of the reference after removing the current contents (yep very handy is cut and paste)
      ```shell
         systemctl restart auditd
         auditctl -l 
-        ~~~
 - The above command should give you a swag load of rules
 - Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
     - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Sysmon%20Linux
