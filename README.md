@@ -38,14 +38,18 @@ Base operating system prep work
     - Reference: https://github.com/socfortress/Wazuh-Rules/blob/main/Auditd/auditd.conf
     - I will get to SOCFortress later - but lets just say I think he is a legend
     - Elevate to the ROOT user you setup earlier
-        - su
-        - apt install auditd
-        - cd /etc/audit/rules.d
-        - nano audit.rules
-        - cut and paste the contents of the reference after removing the current contents (yep very handy is cut and paste)
-        - systemctl restart auditd
-        - auditctl -l 
-        - The above command should give you a swag load of rules
+    ```shell
+        su
+        apt install auditd
+        cd /etc/audit/rules.d
+        nano audit.rules
+      ```  
+ - cut and paste the contents of the reference after removing the current contents (yep very handy is cut and paste)
+     ```shell
+        systemctl restart auditd
+        auditctl -l 
+        ~~~
+- The above command should give you a swag load of rules
 - Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
     - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Sysmon%20Linux
     - Reference: https://github.com/Sysinternals/SysmonForLinux
