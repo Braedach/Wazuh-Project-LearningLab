@@ -26,7 +26,7 @@ Base operating system prep work
 1. Set a hostname that makes sense to you
 2. Set a password for the ROOT user - you will need the access
 3. Update the system using terminal
-4. Turn of hybernation and set the screen blanking to something realistic
+4. Turn oFf hybernation and set the screen blanking to something realistic
 5. Check network settings and ensure IPV6 is enabled - you want a static IP address - I manage this via the firewalla/router - it will get a static address.
 6. Install openSSH - nothing fancy - its behind a firewall and wont be getting public access
 7. Reset all the SSH keys
