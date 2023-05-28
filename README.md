@@ -27,8 +27,10 @@ Base operating system prep work
 - Check network settings and ensure IPV6 is enabled - you want a static IP address - I manage this via the firewalla/router - it will get a static address.
 - Install openSSH - nothing fancy - its behind a firewall and wont be getting public access
 - Reset all the SSH keys
-    - sudo /bin/rm -v /etc/ssh/ssh_host_*
-    - sudo dpkg-reconfigure openssh-server && sudo systemctl restart ssh
+-  ```shell
+       sudo /bin/rm -v /etc/ssh/ssh_host_*
+       sudo dpkg-reconfigure openssh-server && sudo systemctl restart ssh
+      ```
 - Test the connection and log in via your daily driver to your ready to install Ubuntu OS
     - Using Windows terminal and log in to your ready to be setup server
     - Note if you are reading this this will allow for cut and paste which is extremly handy as we move along
