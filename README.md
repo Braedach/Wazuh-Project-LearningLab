@@ -166,9 +166,9 @@ Base installation of Wazuh is finished.
 
 If you read the Wazuh blog posts there are lots of interesting work
     - Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
+    - These can be found using the wazuh manager logs.
     - They also have a nasty habit of not meantioning how to disseminate scripts, bat files, powershell or files to your endpoints
          - I will fill this out later
-         - The wife is waiting for me
          
 ## Post installation notes
 
@@ -182,9 +182,3 @@ I need to get on with helping Taylor and that requires some time and testing.  I
         - Works as a service but something is not right
         
 Note - a lot of fine tuning is needed
-
-
-		
-		
-
-
