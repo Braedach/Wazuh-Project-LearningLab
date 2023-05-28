@@ -146,18 +146,35 @@ I have briefly meantioned SOCFortress annd I need to explain
   - Reference: https://www.linkedin.com/company/socfortressmdr/
 
 So lets begin
-  - Using the terminal SSH on your daily driver connect back to your Wazuh server
-  - Ensure you are in your local home directory (for convenience) and you will need GIT
-  	- apt install git
-	- curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh && bash ~/wazuh_socfortress_rules.sh
-	- Assuming no errors - your Wazuh Manager should restart and all is good
-	- Since we have already installed auditd and sysmon for Linux upon restart you should see these alerts arriving in your webui although you may need to filter for these via the AgentID=000 as this should be your Wazuh Server
+- Using the terminal SSH on your daily driver connect back to your Wazuh server
+- Ensure you are in your local home directory (for convenience) and you will need GIT
+  ```shell
+ 	apt install git
+	curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh && bash ~/wazuh_socfortress_rules.sh
+  ```
+- Assuming no errors - your Wazuh Manager should restart and all is good
+- Read the SOCFortress scipt - give you an insight into what has been done
+- SOCFortress rules are sent to the /var/ossec/etc/rules
+- Default rules exist here /var/ossec/ruleset/rules
+- You may need alter the main configuration file ossec.conf to excempt wazuh rules depending on what is contained in the readme of the SOCFortress respository under excemptions
+- Since we have already installed auditd and sysmon for Linux upon restart you should see these alerts arriving in your webui although you may need to filter for these via the AgentID=000 as this should be your Wazuh Server
+- The SOCFortress script contains code for their decoders.  Refer to table below for the location of these.   The ossec.conf file all allows for excemptions to be set.
 
 Problems
-   - Lists - the SOCFortress script does not allow for scripts to be imported
-   - There are three of note
-        - common-ports, malicious-powershell and another to do with bash
-        - Fill this out to name the file
+- Lists - the SOCFortress script does not allow for scripts to be imported
+- There are three of note
+- common-ports, malicious-powershell and another to do with bash
+- the following code is general but you will need to modify all files you alter in this directory to the correct permissions and ownership
+```shell
+	cd /var/ossec/etc/lists
+	nano common-ports
+	chown wazuh:wazuh common-ports
+	chmod common-ports
+	systemctl restart wazuh-manager
+```
+- You will need to do this for every file you create in this directory.
+- After restarting the manager you will see the associated CBD file
+- Important note - just because the manager restarted and the CBD list created does not mean the file is correct.  Check the lists under managerment in the webui.  I have had issues with this numerous times.
 
 Important file locations
 
@@ -193,12 +210,42 @@ I will fill this out later
 
 #### Remote execution of Wazuh Commands and SCA Commands
 
-Fill this in
+By default Wazuh does not allow for the execution of remote commands to endpoints.  This needs to be configured.
+Reference: https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/wodle-command.html#centralized-configuration
+Enable these via the following
 
+```shell
+	cd /var/ossec/etc
+	nano local_internal_options.conf
+	nano internal_options.conf
+	systemctl restart wazuh-manager
+```
+
+Append the following commands to the first file - alter the commands in the second file.  Note the second file will overwrite on updates from apt
+wazuh_command.remote_commands=1
+sca.remote_commands=1
 
 #### Geotagging Normalisation - via ingest pipeline
 
-Fill this in
+By default certain fields will generate a geotag for country, city, coordinates and so on.  After you start altering wazuh from default you may find fields you wish to add this data for.
+For example sysmon Event 3 log events both in Windows and Linux.
+To to this you will need to alter a file called pipeline.json.  There are other methods and this might require some research.
+I am going to use the wazuh method for the time being.
+Reference: https://github.com/wazuh/wazuh/blob/e4fcce131086ecce93623379b3eb7cfa2166b480/extensions/filebeat/7.x/wazuh-module/alerts/ingest/pipeline.json
+
+```shell
+	cd /usr/share/filebeat/module/wazuh/alerts/ingest
+	cp pipeline.json pipeline.bak
+	nano pipeline.json - alter the file very carefully.  I suggest you strongly use a backup file kept in your local files.
+	/etc/filebeat#
+	cp filebeat.yml filebeat.bak
+    	nano filebeat.yml - alter the file to contain the following lines  - filebeat.overwrite_pipelines: true setup.template.overwrite: true
+	systemctl restart filebeat
+	systemctl status filebeat
+```
+
+Access the webui and confirm all is still working.  If it breaks, restore your back up files and try again.  Its probably your formatting in the pipeline.json file
+Ensure you are getting the updated data in your events in the wazuh webui
 
 #### Wazuh VMWare Integration 
 
