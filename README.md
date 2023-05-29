@@ -61,8 +61,11 @@ Base operating system prep work
 	
 - The above command should give you a swag load of rules
 
+11. Note the default audit.rules from the reference are going to set of alerts within Wazuh.  Mainly because Wazuh uses netstat along with the fact that you are going to use curl and wget.
+12. How you decide to handle this is up to you.
 
-11. Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
+
+13. Install sysmon for Linux (optional step - this will generate sysmon events for Linux that Wazuh can import later)
     - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Sysmon%20Linux
     - Reference: https://github.com/Sysinternals/SysmonForLinux
     - Reference: https://github.com/Sysinternals/SysmonForLinux/blob/main/INSTALL.md
