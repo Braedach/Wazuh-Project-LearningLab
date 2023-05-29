@@ -84,8 +84,11 @@ I did NOT name the servers in any way.  I left it as default.
   - If you are using UbuntuOS like me you will need to install curl
   ```shell
       apt install curl
+      
       Run the below command somewhere convenient.  Its going to drop a few files that you will need later so best to know where they are.
+      
       curl -sO https://packages.wazuh.com/4.4/wazuh-install.sh && curl -sO https://packages.wazuh.com/4.4/config.yml
+      bash wazuh-install.sh --generate-config-files
   ```
   - Edit the configuration file and point it towards the IP address of your server
   - I am not going to do anything fancy here so its just IP address changes - if you are looking at a cluster arrangement with names - then refer to additional references
