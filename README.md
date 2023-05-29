@@ -356,6 +356,15 @@ SSH into your wazuh server as root.
 	- Add the command wodle to the agent.conf file in the right group
 	- The file will be located in Windows endpoints here - C:\Program Files (x86)\ossec-agent\shared
 
+#### Graylog Installation
+
+A centralized Log Management System (LMS) like Graylog provides a means to aggregate, organize, and make sense of all this data.
+Graylog is also recommended by SOCFortress and its one great advantage is its cacheing of API calls
+Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ubuntu_installation.html
+
+1.  Note the reference is set to version 5-1
+2.  Fill this in when you get going the way you want
+
 
 #### SOC Fortress API intergration
 
@@ -367,6 +376,15 @@ Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
 2.  I quickly exceeded my API calls using a Wazuh server install rather than Graylog
 3.  The API was called with sysmon level 3 events only but exceeded 3000 calls a day
 4.  The reference is self explanatory.
+
+#### MISP API Integration
+
+MISSP is an open source threat IOC exchange platform
+Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
+Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
+
+1.  Note there a couple of prerequisites with MISP the main one being the UbuntuOS server edition
+2.  Fill this in after you get it going the way you want
 
 
 #### Domain stats 
