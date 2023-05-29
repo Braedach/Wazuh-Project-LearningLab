@@ -7,6 +7,10 @@
 The following contains the installation and reference notes for the configuration of a local Wazuh server used for Learning
 I am not a professional employed in the field
 
+Reference:  https://socfortress.medium.com/installing-the-new-wazuh-version-4-4-the-socfortress-way-ea3a8030d94b
+
+No I did not follow it step by step.
+
 HARWARE
 
 1. An existing laptop has been utilised with 500Gb of storage, a generation 5 Intel i5 on 32Gb RAM
@@ -119,23 +123,18 @@ I am again running the installation assistant way of doing this.  Since we alrea
 
 Wazuh is now installed and running.  Now for the extra stuff.
 
+
+
+
 ## Installation Footnotes
 
 I already have Wazuh agents running on Windows Endpoints so they are going to start trying to connect to the server via the IP address that was set when the agent was installed
 I already have installed auditd and sysmon on the server.  The first has default rules and a decoder so no problem, the latter does not
-I already had groups set up so I need now to connect to the Wazuh webui and start making drastic changes to the configuration files
+I already had groups set up set up as well.
 
 The first thing I do after logging into the wazuh webui is grab the master ossec.conf file and back it up
-  - I simply do this by navigation to management/configuration and copy the contents of the file and using Visual code I create a backup in my documents
-Since Wazuh on default had only 1 group called default it has only one configuration file which is empty so it is of no importance to me.
+  - I simply do this by navigation to management/configuration and backup the contents of the ossec.conf file
 
-Now this only has to be done by me as I already had a Wazuh Server and I am constantly playing with it but now that I have reinstalled it, I have to rapidly do the following
-  - Reestalish the groups - In my case - Windows, Windows-Test, default in my case is Linux - and although I have a configuration file for it the default will do for the time being.
-  - As agents check back in and connect to the server - some where originally installed using default - they are going to run home to mumma and will connect to the default group again.  I need to move these back to Windows - such is life
-  - You can NOT remove a agent from Default if it does not belong to another group - that is the way (of Wazuh)
-  - So if your in production - better think good on the above.
-  - So as I have been typing and re-establishing my groups and configuration file agents are logging in.  There are going to be issues in the first hour as I rapidly try to out configure the machine.  I loose - so I get errors.  KISS applies.
-  - Might take a while so moving on.
 
 
 ## SOCFortress Rules Implementation
@@ -204,6 +203,8 @@ The following important file locations should be noted - you will need to learn 
 | /var/log                                           | Location of log files that can be imported via decoders                       |
 
 Base installation of Wazuh is finished.
+
+
 
 
 ## Post Installation
