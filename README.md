@@ -373,6 +373,9 @@ Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ub
 
 1.  Note the reference is set to version 5-1
 2.  Fill this in when you get going the way you want
+3.  NOTE - Not a priority at the moment more interested in IOC Feeds those being
+	a. SOCFortress API - have an extension but really need graylog
+	b. MISP - top priority as this will complement the firewall.
 
 
 #### SOC Fortress API intergration
@@ -393,6 +396,7 @@ Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
 Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
 Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
 Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
+Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
 
 1. Currently installed on a VM.  Inital install was in accordance with reference 3
 2. Currently still testing
@@ -412,8 +416,11 @@ Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
 
 5.  Default username and password is Username:  admin@admin.test Password: admin
 6.  Loginto the box IP address, change the admin password, and email address
-7.  Continue iaw reference 3
-8.  Update this as you get it going and tested.
+7.  Continue iaw reference 4
+8.  Import feeds and enable the ones you want - yikes - going to take a while
+9.  Create API enteries in accordance with reference 4.  Note might need to fiddle with these abit as they are connected to a user so I might need to make seperate users.  One of Wazuh, one for Graylog when I get it going etc..
+10. Create the cron job later.  
+11. Continue with reference 5
 
 
 #### Domain stats 
