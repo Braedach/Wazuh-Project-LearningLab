@@ -269,6 +269,8 @@ Reference: https://www.youtube.com/watch?v=Q_V3SgZWcr4&t=100s
 
 #### Wazuh VMWare Integration 
 
+CURRENTLY NOT INGESTING
+
 I have a VMWare Exsi server so I will be integrating its logs into Wazuh
 Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
 
@@ -389,9 +391,29 @@ Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
 MISSP is an open source threat IOC exchange platform
 Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
 Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
+Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
+Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
 
-1.  Note there a couple of prerequisites with MISP the main one being the UbuntuOS server edition
-2.  Fill this in after you get it going the way you want
+1. Currently installed on a VM.  Inital install was in accordance with reference 3
+2. Currently still testing
+3. Create a user called MISP.  Do not run this script as root.  If you do not create a user called MISP it will ask you
+4. No it didnt ask about the FQDN in accordance with reference 3
+
+```shell
+	sudo apt-get update -y && sudo apt-get upgrade -y
+	sudo apt-get install mysql-client  -y
+	wget https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+	chmod +x INSTALL.sh
+	./INSTALL.sh -A
+	
+	sudo ufw allow 80/tcp
+	sudo ufw allow 443/tcp
+```
+
+5.  Default username and password is Username:  admin@admin.test Password: admin
+6.  Loginto the box IP address, change the admin password, and email address
+7.  Continue iaw reference 3
+8.  Update this as you get it going and tested.
 
 
 #### Domain stats 
