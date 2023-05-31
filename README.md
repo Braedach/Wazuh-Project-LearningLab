@@ -194,17 +194,22 @@ The following important file locations should be noted - you will need to learn 
 | /etc/wazuh-indexer                                 | Wazuh Index files - Filebeat installed with these                             |
 | /usr/share/filebeat/module/wazuh/alerts/ingest     | pipeline.json file located here - responsible for geotagging                  |
 | /var/ossec/etc/lists/                              | List files - used in conjunction with Rules - important                       |
+|                                                    | You need to change ownership and rights for files added to this directory     |
 | /var/ossec/etc/shared                              | Used within groups                                                            |
 |                                                    | Placing files within the correct groups allows for dissemination to endpoints |
 |                                                    | Files of anytype supported by Wazuh can be placed in these directories        |
+|                                                    | You need to change ownership and rights for files added to this directory     |
 | /var/ossec/etc/decoders                            | Decoders used by Wazuh to read various ingested logs correctly                |
 |                                                    | It is recommended to get these confirmed by third parties                     |
 | /var/ossec/etc/rules                               | Custom rules - SOCFortress rules go in here for a start                       |
 |                                                    | You can normally edit these rules via webui                                   |
+|                                                    | You need to change ownership and rights for files added to this directory     |
 | /var/ossec/ruleset/rules                           | Wazuh rules - rights can be modified to allow editing via webui               |
+|                                                    | You need to change ownership and rights for files added to this directory     |
 | /var/ossec/active-response/bin                     | Where files go that are marked as active- response within config files        |
 | /var/log                                           | Location of log files that can be imported via decoders                       |
-
+| /var/ossec/integrations                            | Location of Wazuh integration python scripts                                  |
+|                                                    | You need to change ownership and rights for files added to this directory     |
 Base installation of Wazuh is finished.
 
 
@@ -267,9 +272,67 @@ Reference: https://www.youtube.com/watch?v=Q_V3SgZWcr4&t=100s
 4. You will probably be doing this a far bit as you ingest more data beyond the wazuh default.
 
 
+
+#### MISP API Integration
+
+MISSP is an open source threat IOC exchange platform.  It provides IOCs on various types of events, Refer to reference 5.
+
+Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
+Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
+Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
+Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
+Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
+
+1. Currently installed on a VM.  Inital install was in accordance with reference 3
+2. Currently still testing
+3. Create a user called MISP.  Do not run this script as root.  If you do not create a user called MISP it will ask you
+4. No it didnt ask about the FQDN in accordance with reference 3
+
+```shell
+	sudo apt-get update -y && sudo apt-get upgrade -y
+	sudo apt-get install mysql-client  -y
+	wget https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
+	chmod +x INSTALL.sh
+	./INSTALL.sh -A
+	
+	sudo ufw allow 80/tcp
+	sudo ufw allow 443/tcp
+```
+
+5.  Default username and password is Username:  admin@admin.test Password: admin
+6.  Loginto the box IP address, change the admin password, and email address
+7.  Continue iaw reference 4
+8.  Import feeds and enable the ones you want - yikes - going to take a while
+9.  Create API enteries in accordance with reference 4.  Note might need to fiddle with these abit as they are connected to a user so I might need to make seperate users.  One of Wazuh, one for Graylog when I get it going etc..
+10. Create the cron job later.  
+11. Continue with reference 5
+12. Reference 5 is missing the chmod and chown commands for this script created at /var/ossec/integrations
+
+```shell
+	su
+	nano /var/ossec/integrations/custom-misp.py
+	chmod 750 custom-misp.py
+	chown root:wazuh custom-misp.py
+	systemctl restart wazuh-manager
+```
+13.  Probably best to restart the manager after you have altered the integration block in ossec.conf.  I also tinked with the appropriate rule xml file
+14.  It appears that MISP API calls from Wazuh are working fine - as now I have a swag load of events in MISP with my name on them.
+
+#### SOC Fortress API intergration
+
+SOC Fortress provide access via the API to a list of IOC's that are extremely useful.
+These can be intergrated into Wazuh either directly or via Graylog which the recommended solution
+Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
+
+1.  This has been installed on my Wazuh Server via the instuctions in the reference
+2.  I quickly exceeded my API calls using a Wazuh server install rather than Graylog
+3.  The API was called with sysmon level 3 events only but exceeded 3000 calls a day
+4.  The reference is self explanatory.
+
+
 #### Wazuh VMWare Integration 
 
-CURRENTLY NOT INGESTING
+CURRENTLY NOT INGESTING - Fix it.
 
 I have a VMWare Exsi server so I will be integrating its logs into Wazuh
 Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
@@ -336,7 +399,8 @@ if $fromhost-ip startswith '192.168.1.12' then /var/log/vmware-esxi.log
 
 11. Restart the Wazuh manager and check its status
 	- There is no need to add the decoder or the rule block to the ossec.conf file as we have put these in the right place and have set the appropriate permissions
-	- THE LOG IS NOT SHOWING IN WAZUH - FIX IT.
+
+
 
 #### Script Dissemination to Endpoints. 
 
@@ -365,6 +429,7 @@ SSH into your wazuh server as root.
 	- Add the command wodle to the agent.conf file in the right group
 	- The file will be located in Windows endpoints here - C:\Program Files (x86)\ossec-agent\shared
 
+
 #### Graylog Installation
 
 A centralized Log Management System (LMS) like Graylog provides a means to aggregate, organize, and make sense of all this data.
@@ -374,53 +439,8 @@ Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ub
 1.  Note the reference is set to version 5-1
 2.  Fill this in when you get going the way you want
 3.  NOTE - Not a priority at the moment more interested in IOC Feeds those being
-	a. SOCFortress API - have an extension but really need graylog
-	b. MISP - top priority as this will complement the firewall.
-
-
-#### SOC Fortress API intergration
-
-SOC Fortress provide access via the API to a list of IOC's that are extremely useful.
-These can be intergrated into Wazuh either directly or via Graylog which the recommended solution
-Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
-
-1.  This has been installed on my Wazuh Server via the instuctions in the reference
-2.  I quickly exceeded my API calls using a Wazuh server install rather than Graylog
-3.  The API was called with sysmon level 3 events only but exceeded 3000 calls a day
-4.  The reference is self explanatory.
-
-#### MISP API Integration
-
-MISSP is an open source threat IOC exchange platform
-Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
-Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
-Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
-Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
-Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
-
-1. Currently installed on a VM.  Inital install was in accordance with reference 3
-2. Currently still testing
-3. Create a user called MISP.  Do not run this script as root.  If you do not create a user called MISP it will ask you
-4. No it didnt ask about the FQDN in accordance with reference 3
-
-```shell
-	sudo apt-get update -y && sudo apt-get upgrade -y
-	sudo apt-get install mysql-client  -y
-	wget https://raw.githubusercontent.com/MISP/MISP/2.4/INSTALL/INSTALL.sh
-	chmod +x INSTALL.sh
-	./INSTALL.sh -A
-	
-	sudo ufw allow 80/tcp
-	sudo ufw allow 443/tcp
-```
-
-5.  Default username and password is Username:  admin@admin.test Password: admin
-6.  Loginto the box IP address, change the admin password, and email address
-7.  Continue iaw reference 4
-8.  Import feeds and enable the ones you want - yikes - going to take a while
-9.  Create API enteries in accordance with reference 4.  Note might need to fiddle with these abit as they are connected to a user so I might need to make seperate users.  One of Wazuh, one for Graylog when I get it going etc..
-10. Create the cron job later.  
-11. Continue with reference 5
+	SOCFortress API - have an extension but really need graylog
+	MISP - top priority as this will complement the firewall.
 
 
 #### Domain stats 
@@ -429,8 +449,8 @@ Domain stats is a reputation based DNS query API that can be installed on a serv
 Appropriate references have been provided.
 Reference: https://github.com/MarkBaggett/domain_stats
 Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
-1.  I had this going via a service on my Wazuh server
-2.  I am experiencing issues and have yet to reimplement
+1.  Scrapped at this point in time
+2.  Reason being is that I dont see the point.  I have MISP, my firewall and SOCFortress IOC API when I sort out Graylog
 
 
          
@@ -439,8 +459,8 @@ Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
 The following list of references is outstanding work not including the notes above
 1. https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
 2. Backup shell script
-3. Update SOCFortress rules script - more about where it gets the rules rather than the script
-4. Investigation of Firewalla API calls and mechanisms and integration into Wazuh
+3. Update SOCFortress rules script - create a cron job on this.
+4. Investigation of Firewalla API calls and mechanisms and integration into Wazuh - API does not have this ability yet.
 5. Investigation of Windows Firewall rules scripts
 
 
