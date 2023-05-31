@@ -137,6 +137,11 @@ I already had groups set up set up as well.
 
 The first thing I do after logging into the wazuh webui is grab the master ossec.conf file and back it up
   - I simply do this by navigation to management/configuration and backup the contents of the ossec.conf file
+  - I then have to rapidly rebuild my groups, agent.conf files for each group and replace the ossec.conf file with my master backup copy
+  - Issues with Wazuh are reported here - https://github.com/wazuh/wazuh/issues
+  - Wazuh also provides a backup guideance here - https://documentation.wazuh.com/current/user-manual/files-backup/wazuh-central-components.html
+  - I simply just move all the files I play with to my local directory and pull them off via a USB drive.  Not exactly a production solution.
+  - I then need to bring my Wazuh server into alignment with my desired configuration - hence the next step.
 
 
 
@@ -210,16 +215,9 @@ The following important file locations should be noted - you will need to learn 
 | /var/log                                           | Location of log files that can be imported via decoders                       |
 | /var/ossec/integrations                            | Location of Wazuh integration python scripts                                  |
 |                                                    | You need to change ownership and rights for files added to this directory     |
+
 Base installation of Wazuh is finished.
 
-
-
-
-## Post Installation
-
-If you read the Wazuh blog posts there are lots of interesting work
-1. Becareful following the blog posts - they tend to leave the rules in the default rules range and this will cause problems.  I suggest you use your own number conventions
-2. Errors can be found using the wazuh manager logs.
 
 
 #### Remote execution of Wazuh Commands and SCA Commands
@@ -437,10 +435,10 @@ Graylog is also recommended by SOCFortress and its one great advantage is its ca
 - Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ubuntu_installation.html
 
 1.  Note the reference is set to version 5-1
-2.  Fill this in when you get going the way you want
-3.  NOTE - Not a priority at the moment more interested in IOC Feeds those being
+2.  NOTE - Not a priority at the moment more interested in IOC Feeds those being
 	SOCFortress API - have an extension but really need graylog
 	MISP - top priority as this will complement the firewall.
+3.  Fill this in when you get it going properly
 
 
 #### Domain stats 
