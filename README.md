@@ -7,7 +7,7 @@
 The following contains the installation and reference notes for the configuration of a local Wazuh server used for Learning
 I am not a professional employed in the field
 
-Reference:  https://socfortress.medium.com/installing-the-new-wazuh-version-4-4-the-socfortress-way-ea3a8030d94b
+- Reference:  https://socfortress.medium.com/installing-the-new-wazuh-version-4-4-the-socfortress-way-ea3a8030d94b
 
 No I did not follow it step by step.
 
@@ -225,8 +225,8 @@ If you read the Wazuh blog posts there are lots of interesting work
 #### Remote execution of Wazuh Commands and SCA Commands
 
 By default Wazuh does not allow for the execution of remote commands to endpoints.  This needs to be configured.
-Reference: https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/wodle-command.html#centralized-configuration
-Enable these via the following
+- Reference: https://documentation.wazuh.com/current/user-manual/reference/ossec-conf/wodle-command.html#centralized-configuration
+1. Enable these via the following
 
 ```shell
 	cd /var/ossec/etc
@@ -235,15 +235,15 @@ Enable these via the following
 	systemctl restart wazuh-manager
 ```
 
-Append the following commands to the first file - alter the commands in the second file.  Note the second file will overwrite on updates from apt - which is why it is required.
+2. Append the following commands to the first file - alter the commands in the second file.  Note the second file will overwrite on updates from apt - which is why it is required.
 
 ```shell
 	wazuh_command.remote_commands=1
 	sca.remote_commands=1
 ```
 
-Check you local agent logs to ensure that any scripts you have created are executing.
-This is probably a little premature at this stage as we havent created any but the defaults.
+3. Check you local agent logs to ensure that any scripts you have created are executing.
+4. This is probably a little premature at this stage as we havent created any but the defaults.
 
 
 #### Geotagging Normalisation - via ingest pipeline
@@ -252,8 +252,8 @@ By default certain fields will generate a geotag for country, city, coordinates 
 For example sysmon Event 3 log events both in Windows and Linux.
 To to this you will need to alter a file called pipeline.json.  There are other methods and this might require some research.
 I am going to use the wazuh method for the time being.
-Reference: https://github.com/wazuh/wazuh/blob/e4fcce131086ecce93623379b3eb7cfa2166b480/extensions/filebeat/7.x/wazuh-module/alerts/ingest/pipeline.json
-Reference: https://www.youtube.com/watch?v=Q_V3SgZWcr4&t=100s
+- Reference: https://github.com/wazuh/wazuh/blob/e4fcce131086ecce93623379b3eb7cfa2166b480/extensions/filebeat/7.x/wazuh-module/alerts/ingest/pipeline.json
+- Reference: https://www.youtube.com/watch?v=Q_V3SgZWcr4&t=100s
 
 1.  Alter the pipeline.json file
 
@@ -277,11 +277,11 @@ Reference: https://www.youtube.com/watch?v=Q_V3SgZWcr4&t=100s
 
 MISSP is an open source threat IOC exchange platform.  It provides IOCs on various types of events, Refer to reference 5.
 
-Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
-Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
-Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
-Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
-Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
+- Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
+- Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
+- Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
+- Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
+- Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
 
 1. Currently installed on a VM.  Inital install was in accordance with reference 3
 2. Currently still testing
@@ -322,7 +322,7 @@ Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
 
 SOC Fortress provide access via the API to a list of IOC's that are extremely useful.
 These can be intergrated into Wazuh either directly or via Graylog which the recommended solution
-Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
+- Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
 
 1.  This has been installed on my Wazuh Server via the instuctions in the reference
 2.  I quickly exceeded my API calls using a Wazuh server install rather than Graylog
@@ -335,7 +335,7 @@ Reference: https://github.com/socfortress/SOCFortress-Threat-Intel
 CURRENTLY NOT INGESTING - Fix it.
 
 I have a VMWare Exsi server so I will be integrating its logs into Wazuh
-Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
+- Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
 
 1. Since I have not touched the VMWare server I will be skipping this bit in the reference and only doing the Wazuh side of the configuration.
 
@@ -434,7 +434,7 @@ SSH into your wazuh server as root.
 
 A centralized Log Management System (LMS) like Graylog provides a means to aggregate, organize, and make sense of all this data.
 Graylog is also recommended by SOCFortress and its one great advantage is its cacheing of API calls
-Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ubuntu_installation.html
+- Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ubuntu_installation.html
 
 1.  Note the reference is set to version 5-1
 2.  Fill this in when you get going the way you want
@@ -447,8 +447,9 @@ Reference: https://go2docs.graylog.org/5-1/downloading_and_installing_graylog/ub
 
 Domain stats is a reputation based DNS query API that can be installed on a server and fed Sysmon DNS Events
 Appropriate references have been provided.
-Reference: https://github.com/MarkBaggett/domain_stats
-Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
+- Reference: https://github.com/MarkBaggett/domain_stats
+- Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/Domain%20Stats
+
 1.  Scrapped at this point in time
 2.  Reason being is that I dont see the point.  I have MISP, my firewall and SOCFortress IOC API when I sort out Graylog
 
