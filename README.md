@@ -275,16 +275,15 @@ I am going to use the wazuh method for the time being.
 
 MISSP is an open source threat IOC exchange platform.  It provides IOCs on various types of events, Refer to reference 5.
 
-- Reference: https://misp.github.io/MISP/xINSTALL.ubuntu2204
 - Reference: https://github.com/socfortress/Wazuh-Rules/tree/main/MISP
 - Reference: https://holdmybeersecurity.com/2020/01/28/install-setup-misp-on-ubuntu-18-04-with-an-intro-to-pymisp/
 - Reference: https://socfortress.medium.com/part-10-misp-threat-intel-68131b18f719
 - Reference: https://opensecure.medium.com/wazuh-and-misp-integration-242dfa2f2e19
 
-1. Currently installed on a VM.  Inital install was in accordance with reference 3
+1. Currently installed on a VM.  Inital install was in accordance with reference 2
 2. Currently still testing
-3. Create a user called MISP.  Do not run this script as root.  If you do not create a user called MISP it will ask you
-4. No it didnt ask about the FQDN in accordance with reference 3
+3. Just run the commands below - I used the option to create a MISP user.
+4. No it didnt ask about the FQDN in accordance with reference 2
 
 ```shell
 	sudo apt-get update -y && sudo apt-get upgrade -y
@@ -317,9 +316,11 @@ MISSP is an open source threat IOC exchange platform.  It provides IOCs on vario
 14.  How to see your API Calls
 
 - Use the API widget in the MISP Web Dashboard
-- Use sysmon for linux in Wazuh and search for events that call the python script - there a lot of these about 80 an hour ????
-- This may take a little while and I seem to have no correlation between MISP and Wazuh (number of events)
-- Monitor this situation and either try to fix it myself or provide feedback to SOCFortress via Github
+- Use Wazuh Filters
+	To find errors look for the field data.misp.errors 
+	To find all records look for the field data.integration: MISP
+	But this is not listing calls. So I need to be looking for something else.
+	SOCFortress tested the API by calling a domain listed in MISP as malicious.
 
 #### SOC Fortress API intergration
 
