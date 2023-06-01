@@ -17,6 +17,13 @@ HARWARE
 2. This handles the home network of about 10 Windows systems and linux servers used within the home Lab
 3. It also has a battery - cheap mans UPS
 
+A few notes
+1.  MISP is currently running on a VMware ESXI host
+2.  The VMware ESXI host is an antique compared to productions systems being an Intel i5 running on 32GB of RAM although it does have 10Gb of storage
+3.  I cannot understate the importance of Snapshots on your VMware systems.  I have broken MISP 3 times in the last 7 days.  I can rebuild it in 30 minutes
+4.  Live & Learn - and yep, I learn alot by my home lab.
+5.  By the way TrueNAS just got an update.  Let the fun begin (unrelated to this readme)
+
 SERVER Base
 
 1. The base OS is Ubuntu 22.04
