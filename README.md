@@ -315,10 +315,11 @@ MISSP is an open source threat IOC exchange platform.  It provides IOCs on vario
 ```
 13.  Probably best to restart the manager after you have altered the integration block in ossec.conf.  I also tinked with the appropriate rule xml file
 14.  How to see your API Calls
-	- Use the API widget in the MISP Web Dashboard
-	- Use sysmon for linux in Wazuh and search for events that call the python script - there a lot of these about 80 an hour ????
-	- This may take a little while and I seem to have no correlation between MISP and Wazuh (number of events)
-	- Monitor this situation and either try to fix it myself or provide feedback to SOCFortress via Github
+
+- Use the API widget in the MISP Web Dashboard
+- Use sysmon for linux in Wazuh and search for events that call the python script - there a lot of these about 80 an hour ????
+- This may take a little while and I seem to have no correlation between MISP and Wazuh (number of events)
+- Monitor this situation and either try to fix it myself or provide feedback to SOCFortress via Github
 
 #### SOC Fortress API intergration
 
