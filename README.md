@@ -170,7 +170,8 @@ So lets begin
 - Ensure you are in your local home directory (for convenience) and you will need GIT
   ```shell
  	apt install git
-	curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh && bash ~/wazuh_socfortress_rules.sh
+	curl -so ~/wazuh_socfortress_rules.sh https://raw.githubusercontent.com/socfortress/Wazuh-Rules/main/wazuh_socfortress_rules.sh
+	bash ~/wazuh_socfortress_rules.sh
   ```
 - Assuming no errors - your Wazuh Manager should restart and all is good
 - Read the SOCFortress scipt - give you an insight into what has been done
@@ -245,6 +246,7 @@ By default Wazuh does not allow for the execution of remote commands to endpoint
 ```shell
 	wazuh_command.remote_commands=1
 	sca.remote_commands=1
+	logcollector.remote_commands=1
 ```
 
 3. Check you local agent logs to ensure that any scripts you have created are executing.
@@ -342,8 +344,6 @@ These can be intergrated into Wazuh either directly or via Graylog which the rec
 
 
 #### Wazuh VMWare Integration 
-
-CURRENTLY NOT INGESTING - Fix it.
 
 I have a VMWare Exsi server so I will be integrating its logs into Wazuh
 - Reference: https://wazuh.com/blog/monitoring-vmware-esxi-with-wazuh/ 
