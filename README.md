@@ -469,11 +469,30 @@ Appropriate references have been provided.
 ## Outstanding Work
 
 The following list of references is outstanding work not including the notes above
-1. https://wazuh.com/blog/building-ioc-files-for-threat-intelligence-with-wazuh-xdr/ 
-2. Backup shell script
-3. Update SOCFortress rules script - create a cron job on this.
-4. Investigation of Firewalla API calls and mechanisms and integration into Wazuh - API does not have this ability yet.
-5. Investigation of Windows Firewall rules scripts
+1. Backup shell script
+2. Update SOCFortress rules script - create a cron job on this.
+3. Investigation of Firewalla API calls and mechanisms and integration into Wazuh - API does not have this ability yet.
+4. Investigation of Windows Firewall rules scripts
+
+## Handy commands
+
+systemctl --type=service --state=running
+systemctl --type=service --state=running | grep ssh
+systemctl --type=service --state=failed
+sudo apt-mark hold wazuh-manager
+sudo apt-mark hold wazuh-indexer
+apt-get autoclean
+apt-get autoremove
+stat [filename]
+pip list
+sudo pip uninstall
+netstat -ltpnd
+filebeat test output
+netstat -ltpnd
+netstat -vatunp|grep wazuh-agentd
+sudo pro status
+
+
 
 
         
