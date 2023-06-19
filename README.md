@@ -476,21 +476,21 @@ The following list of references is outstanding work not including the notes abo
 
 ## Handy commands
 
--systemctl --type=service --state=running
--systemctl --type=service --state=running | grep ssh
--systemctl --type=service --state=failed
--sudo apt-mark hold wazuh-manager
--sudo apt-mark hold wazuh-indexer
--apt-get autoclean
--apt-get autoremove
--stat [filename]
--pip list
--sudo pip uninstall
--netstat -ltpnd
--filebeat test output
--netstat -ltpnd
--netstat -vatunp|grep wazuh-agentd
--sudo pro status
+- systemctl --type=service --state=running
+- systemctl --type=service --state=running | grep ssh
+- systemctl --type=service --state=failed
+- sudo apt-mark hold wazuh-manager
+- sudo apt-mark hold wazuh-indexer
+- apt-get autoclean
+- apt-get autoremove
+- stat [filename]
+- pip list
+- sudo pip uninstall
+- netstat -ltpnd
+- filebeat test output
+- netstat -ltpnd
+- netstat -vatunp|grep wazuh-agentd
+- sudo pro status
 
 
 
