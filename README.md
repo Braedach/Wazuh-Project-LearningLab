@@ -37,7 +37,7 @@ Base operating system prep work
 1. Set a hostname that makes sense to you
 2. Set a password for the ROOT user - you will need the access
 3. Update the system using terminal
-4. Turn oFf hybernation and set the screen blanking to something realistic
+4. Turn off hybernation and set the screen blanking to something realistic
 5. Check network settings and ensure IPV6 is enabled - you want a static IP address - I manage this via the firewalla/router - it will get a static address.
 6. Install openSSH - nothing fancy - its behind a firewall and wont be getting public access
 7. Reset all the SSH keys
@@ -330,6 +330,10 @@ MISSP is an open source threat IOC exchange platform.  It provides IOCs on vario
 	To find all records look for the field data.integration: MISP
 	But this is not listing calls. So I need to be looking for something else.
 	SOCFortress tested the API by calling a domain listed in MISP as malicious.
+- Note
+  	If you are not familiar with MISP it will take a while to figure out how it works
+  	The Wazuh calls to the MISP API appear in the application logs and will list what has been checked, whether a domain, IP address, Hash etc..
+  	The application log in MISP is a great way of seeing whether your Wazuh calls via the API are going to MISP
 
 #### SOC Fortress API intergration
 
@@ -361,7 +365,7 @@ I have a VMWare Exsi server so I will be integrating its logs into Wazuh
 # provides UDP syslog reception
 module(load="imudp")
 input(type="imudp" port="514")
-if $fromhost-ip startswith '192.168.1.12' then /var/log/vmware-esxi.log
+if $fromhost-ip startswith '[ip address of your server' then /var/log/vmware-esxi.log
 ```
 
 3. Do not add the extra bit in the reference.  It creates an error 
@@ -469,7 +473,7 @@ Appropriate references have been provided.
 ## Outstanding Work
 
 The following list of references is outstanding work not including the notes above
-1. Backup shell script
+1. Backup shell script - done - works well enough.
 2. Update SOCFortress rules script - create a cron job on this.
 3. Investigation of Firewalla API calls and mechanisms and integration into Wazuh - API does not have this ability yet.
 4. Investigation of Windows Firewall rules scripts
@@ -488,7 +492,6 @@ The following list of references is outstanding work not including the notes abo
 - sudo pip uninstall
 - netstat -ltpnd
 - filebeat test output
-- netstat -ltpnd
 - netstat -vatunp|grep wazuh-agentd
 - sudo pro status
 
